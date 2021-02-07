@@ -53,6 +53,6 @@ UART4を使用しない場合は、UART2の行だけを追加します。（If y
 
 再起動が完了したら `/dev` を確認してください。（Check `/dev` when the reboot is complete.）
 
-下記のものが追加されていたらUART2,UART4の解放は成功です。（Release of UART2 and UART4 is successful if the following items exist.）
+下記の項目が追加されていたらUART2,UART4の解放は成功です。（Release of UART2 and UART4 is successful if the following items exist.）
 
 <img src="img/serialport_2.png" width="800">
