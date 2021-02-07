@@ -25,6 +25,8 @@
 
 この際、シリアルコンソールは無効のままにしてください。（Serial console ⇒ Disable）
 
+再起動を促されるので再起動します。（You will be prompted to reboot, so reboot.）
+
 #### ② UART2,UART4を使用する場合 （When using UART2 and UART4）
 
 `/boot/config.txt` を編集します。（Edit）
