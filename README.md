@@ -56,3 +56,30 @@ UART4を使用しない場合は、UART2の行だけを追加します。（If y
 下記の項目が追加されていたらUART2,UART4の解放は成功です。（Release of UART2 and UART4 is successful if the following items exist.）
 
 <img src="img/serialport_2.png" width="800">
+
+#### ③ RaspberryPiを再起動する度に必要な作業 （Work required every time you restart the Raspberry Pi）
+
+* 起動時に他のプロセス？がシリアルポートを占有してしまう為、STOPする。
+* プログラムが`sudo`無しにシリアルポートにアクセスできるようにパーミッションを変更します。再起動する度に元に戻ります。
+
+具体的には、
+
+UART1の場合、
+```
+sudo systemctl stop serial-getty@ttyS0.service
+sudo chmod 666 /dev/ttyS0
+```
+
+UART2の場合、
+```
+sudo systemctl stop serial-getty@ttyAMA1.service
+sudo chmod 666 /dev/ttyAMA1
+```
+
+UART4の場合、
+```
+sudo systemctl stop serial-getty@ttyAMA2.service
+sudo chmod 666 /dev/ttyAMA2
+```
+
+UART2,UART4は開放状況、環境によってずれる可能性があります。（UART2 and UART4 may shift depending on the open status and environment.）
