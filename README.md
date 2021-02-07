@@ -7,6 +7,8 @@
 * Raspberry Pi 4 modelB 4GB（UART1、UART2、UART4）
 * Winsen MH-Z19C
 
+他の環境でも動くかもしれません。
+
 ### 配線図 (Wiring diagram)
 
 <img src="img/raspi4.png" width="900">
