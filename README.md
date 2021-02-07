@@ -96,3 +96,24 @@ UART2,UART4は開放状況、環境によってずれる可能性があります
 <img src="img/install_1.png" width="900">
 
 <img src="img/install_2.png" width="900">
+
+### config.json の設定例（Configuration example of config.json）
+```
+    "accessories": [
+        {
+            "accessory": "Co2Sensor",
+            "name": "Co2 Sensor",
+            "uart": "ttyXXX",
+            "schedule": "*/5 * * * *",
+            "warning_level": 1500
+        },
+        {
+        ・・・・
+        }
+    ]
+```
+* `accessory` → 固定値（Fixed value）[必須項目（required field）]
+* `name` → お好みに（To your liking）[必須項目（required field）]
+* `uart` → MH-Z19を接続したUARTをttyXXX形式で指定します。（Specify the UART to which MH-Z19 is connected in ttyXXX format.）
+* `schedule` → CO2濃度の更新間隔を指定します。（Specify the acquisition interval of CO2 concentration.）
+* `warning_level` → CO2がこのレベルを超えると警告が表示されるようになります。（A warning will be displayed when CO2 exceeds this level.）
