@@ -117,3 +117,7 @@ UART2,UART4は開放状況、環境によってずれる可能性があります
 * `uart` → MH-Z19を接続したUARTをttyXXX形式で指定します。（Specify the UART to which MH-Z19 is connected in ttyXXX format.）
 * `schedule` → CO2濃度の更新間隔を指定します。（Specify the acquisition interval of CO2 concentration.）
 * `warning_level` → CO2がこのレベルを超えると警告が表示されるようになります。（A warning will be displayed when CO2 exceeds this level.）
+
+## 最後に（Finally）
+
+I can't speak English, so I use Google Translate for everything. I'm sorry if there is a rude wording.
