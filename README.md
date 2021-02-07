@@ -7,7 +7,7 @@
 * Raspberry Pi 4 modelB 4GB（UART1、UART2、UART4）
 * Winsen MH-Z19C
 
-他の環境でも動くかもしれません。
+もしかしたら他の環境でも動くかもしれません。
 
 ### 配線図 (Wiring diagram)
 
@@ -50,3 +50,9 @@ dtoverlay=uart4
 UART4を使用しない場合は、UART2の行だけを追加します。（If you are not using UART4, add only the UART2 line.）
 
 保存したら再起動します。（After saving, reboot.）
+
+再起動が完了したら `/dev` を確認してください。（Check `/dev` when the reboot is complete.）
+
+下記のものが追加されていたらUART2,UART4の解放は成功です。（Release of UART2 and UART4 is successful if the following items exist.）
+
+<img src="img/serialport_2.png" width="800">
