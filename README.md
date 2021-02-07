@@ -2,11 +2,16 @@
   <img src="img/mhz19c_omote.png" width="300">
 </p>
 
+## 概要（Overview）
+
+このプラグインはhomebridgeを通してMH-Z19での二酸化炭素濃度計測結果をHomeKit上に表示する為のプラグインです。（This plug-in is a plug-in for displaying the carbon dioxide concentration measurement result of MH-Z19 on HomeKit through homebridge.）
+
 ### テスト環境（Testing Environment）
 
 * Raspberry Pi 4 modelB 4GB（UART1、UART2、UART4）
 * Winsen MH-Z19C
 
+ここに書いてある事はわたしが設定した内容であり、動作を保証するものではありません。（What is written here is what I have set, and I do not guarantee the operation.）
 もしかしたら他の環境でも動くかもしれません。
 
 ### 配線図 (Wiring diagram)
