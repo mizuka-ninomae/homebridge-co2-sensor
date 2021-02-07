@@ -59,8 +59,8 @@ UART4を使用しない場合は、UART2の行だけを追加します。（If y
 
 #### ③ RaspberryPiを再起動する度に必要な作業 （Work required every time you restart the Raspberry Pi）
 
-* 起動時に他のプロセス？がシリアルポートを占有してしまう為、STOPする。
-* プログラムが`sudo`無しにシリアルポートにアクセスできるようにパーミッションを変更します。再起動する度に元に戻ります。
+* 起動時にserial-gettyがシリアルポートを占有してしまう為、STOPする。（Stop because serial-getty occupies the serial port at startup.）
+* プログラムが`sudo`無しにシリアルポートにアクセスできるようにパーミッションを変更します。再起動する度に元に戻ります。（Change the permissions so that the program can access the serial port without `sudo`. It will be restored every time you restart.）
 
 具体的には、
 
