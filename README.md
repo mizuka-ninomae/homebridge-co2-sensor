@@ -17,9 +17,11 @@
 
 ### 設定 （Configuration）
 
+#### ① シリアルポートの有効化 （Enable serial port）
+
 <img src="img/serialport_1.png" width="900">
 
-シリアルポートを有効にします。（SerialPort ⇒ enable）
+メニューの『設定＞Raspberry Pi の設定＞インターフェイス』のシリアルポートを有効にします。（SerialPort ⇒ enable）
 
 この際、シリアルコンソールは無効のままにしてください。（Serial console ⇒ Disable）
 
