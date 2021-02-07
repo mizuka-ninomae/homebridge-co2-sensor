@@ -20,7 +20,7 @@
 
 <img src="img/mhz19c_ura.png" width="600">
 
-### 設定 （Configuration）
+### 事前設定 （Preparation settings）
 
 #### ① シリアルポートの有効化 （Enable serial port）
 
@@ -88,3 +88,11 @@ sudo chmod 666 /dev/ttyAMA2
 ```
 
 UART2,UART4は開放状況、環境によってずれる可能性があります。（UART2 and UART4 may shift depending on the open status and environment.）
+
+## インストール（Install）
+
+[Homebridge](https://github.com/homebridge/homebridge)と[Homebridge UI](https://github.com/oznu/homebridge-config-ui-x#readme)が正しくインストールされているものとします。（It is assumed that [Homebridge](https://github.com/homebridge/homebridge) and [Homebridge UI](https://github.com/oznu/homebridge-config-ui-x#readme) are installed correctly.）
+
+<img src="img/install_1.png" width="900">
+
+<img src="img/install_2.png" width="900">
