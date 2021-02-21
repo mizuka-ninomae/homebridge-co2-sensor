@@ -26,7 +26,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/mizuka-ninomae/homebridge-co2-sensor.git"
+    "url": "git+https://github.com/mizuka-ninomae/homebridge-co2-sensor.git"
   },
   "author": "mizuka-ninomae",
   "license": "MIT",
@@ -34,5 +34,5 @@
     "url": "https://github.com/mizuka-ninomae/homebridge-co2-sensor/issues"
   },
   "homepage": "https://github.com/mizuka-ninomae/homebridge-co2-sensor#readme",
-  "description": ""
+  "description": "<p align=\"center\">\r   <img src=\"img/mhz19c_omote.png\" width=\"300\">\r </p>"
 }
