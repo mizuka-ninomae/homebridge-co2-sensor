@@ -85,7 +85,7 @@ Co2SensorAccessory.prototype.getCarbonDioxide = function(callback) {
   });
 
   port.on("open", function() {
-    if(this.debag) {
+    if (this.debag) {
       this.log("Co2Sensor SerialPort: Open");
       this.log('Co2Sensor send data:    ', sdata);
     }
@@ -95,7 +95,7 @@ Co2SensorAccessory.prototype.getCarbonDioxide = function(callback) {
   port.on("data", function(data) {
     rdata = Buffer.concat([rdata, data]);
     if (rdata.byteLength >= 9) {
-      if(this.debag) {
+      if (this.debag) {
         this.log('Co2Sensor receive data: ', rdata);
       }
       let adata    = new Uint8Array(rdata);
@@ -107,30 +107,28 @@ Co2SensorAccessory.prototype.getCarbonDioxide = function(callback) {
         this.log('Co2Sensor Bad Checksum: ' + adata[8] + ' / ' + checksum)
       }
       port.close();
+      if (this.debag) {
+        this.log("Co2Sensor SerialPort: Close");
+      }
+      if (this.warning_level > co2_level) {
+        co2_detected = 0;
+      }
+      else {
+        co2_detected = 1;
+      }
+      if (this.debag) {
+        this.log(co2_level);
+        this.log(co2_detected);
+      }
+      callback(null, co2_level, co2_detected);
     }
   }.bind(this));
 
-  port.on("error", function() {
-    if(this.debag) {
+  port.on("error", function(err) {
+    if (this.debag) {
       this.log("Co2Sensor error");
     }
     port.close();
-  }.bind(this));
-
-  port.on("close", function() {
-    if(this.debag) {
-      this.log("Co2Sensor SerialPort: Close");
-      this.log(co2_level);
-    }
-    if (this.warning_level > co2_level) {
-      co2_detected = 0;
-    }
-    else {
-      co2_detected = 1;
-    }
-    if(this.debag) {
-      this.log(co2_detected);
-    }
-    callback(null, co2_level, co2_detected);
+    callback(err, co2_level, co2_detected);
   }.bind(this));
 }
