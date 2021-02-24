@@ -14,7 +14,6 @@ function Co2SensorAccessory(log, config) {
   this.uart_path     = config["uart_path"];
   this.schedule      = config["schedule"] || '*/5 * * * *';
   this.warning_level = config["warning_level"] || 1500;
-  this.debag         = config["debag"] || false;
 
   this.informationService         = new Service.AccessoryInformation();
   this.CarbonDioxideSensorService = new Service.CarbonDioxideSensor(this.name);
@@ -34,8 +33,7 @@ function Co2SensorAccessory(log, config) {
 
     this.job = new CronJob({
       cronTime: this.schedule,
-      onTick: () => {
-        new MH_Z19 (this.uart_path, function(error, co2_level, stderr){
+      onTick: new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
           if (co2_level == null) {
             this.CarbonDioxideSensorService
               .updateCharacteristic(Characteristic.CarbonDioxideLevel, new Error(error));
@@ -51,8 +49,7 @@ function Co2SensorAccessory(log, config) {
             this.CarbonDioxideSensorService
               .updateCharacteristic(Characteristic.CarbonDioxideDetected, co2_detected);
           }
-        }.bind(this));
-      },
+        }),
       runOnInit: true
     })
     this.job.start()
@@ -63,17 +60,14 @@ Co2SensorAccessory.prototype.getServices = function() {
 }
 
 Co2SensorAccessory.prototype.getCarbonDioxideLevel = function(callback) {
-  let mhz19 = new MH_Z19 (this.uart_path, function(error, co2_level, stderr){
-
+  new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
+    callback (null, co2_level);
   });
 }
 
 Co2SensorAccessory.prototype.getCarbonDioxideDetected = function(callback) {
-  let mhz19 = new MH_Z19 (this.uart_path, function(error, co2_level, stderr){
-
+  new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
+    let co2_detected = (this.warning_level > co2_level) ? 0 : 1;
+    callback (null, co2_detected);
   });
 }
-
-this.CarbonDioxideSensorService
-  .getCharacteristic(Characteristic.CarbonDioxideLevel)
-  .on('get', this.getCarbonDioxideLevel.bind(this));
