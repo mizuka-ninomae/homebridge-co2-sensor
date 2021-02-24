@@ -18,6 +18,31 @@ function Co2SensorAccessory(log, config) {
   this.informationService         = new Service.AccessoryInformation();
   this.CarbonDioxideSensorService = new Service.CarbonDioxideSensor(this.name);
 
+  this.job = new CronJob({
+    cronTime: this.schedule,
+    onTick: new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
+        if (co2_level == null) {
+          this.CarbonDioxideSensorService
+            .updateCharacteristic(Characteristic.CarbonDioxideLevel, new Error(error));
+          this.CarbonDioxideSensorService
+            .updateCharacteristic(Characteristic.CarbonDioxideDetected, new Error(error));
+        }
+        else {
+          let co2_detected = (this.warning_level > co2_level) ? 0 : 1;
+          this.log(`>>> [Update] CarbonDioxideLevel => ${co2_level}`);
+          this.log(`>>> [Update] CarbonDioxideDetected => ${co2_detected}`);
+          this.CarbonDioxideSensorService
+            .updateCharacteristic(Characteristic.CarbonDioxideLevel, co2_level);
+          this.CarbonDioxideSensorService
+            .updateCharacteristic(Characteristic.CarbonDioxideDetected, co2_detected);
+        }
+    }),
+    runOnInit: true
+  })
+  this.job.start()
+}
+
+Co2SensorAccessory.prototype.getServices = function() {
   this.informationService
     .setCharacteristic(Characteristic.Manufacturer, "Co2Sensor Manufacturer")
     .setCharacteristic(Characteristic.Model, 'Co2Sensor Model')
@@ -31,31 +56,6 @@ function Co2SensorAccessory(log, config) {
     .getCharacteristic(Characteristic.CarbonDioxideDetected)
     .on('get', this.getCarbonDioxideDetected.bind(this));
 
-    this.job = new CronJob({
-      cronTime: this.schedule,
-      onTick: new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
-          if (co2_level == null) {
-            this.CarbonDioxideSensorService
-              .updateCharacteristic(Characteristic.CarbonDioxideLevel, new Error(error));
-            this.CarbonDioxideSensorService
-              .updateCharacteristic(Characteristic.CarbonDioxideDetected, new Error(error));
-          }
-          else {
-            let co2_detected = (this.warning_level > co2_level) ? 0 : 1;
-            this.log(`>>> [Update] CarbonDioxideLevel => ${co2_level}`);
-            this.log(`>>> [Update] CarbonDioxideDetected => ${co2_detected}`);
-            this.CarbonDioxideSensorService
-              .updateCharacteristic(Characteristic.CarbonDioxideLevel, co2_level);
-            this.CarbonDioxideSensorService
-              .updateCharacteristic(Characteristic.CarbonDioxideDetected, co2_detected);
-          }
-        }),
-      runOnInit: true
-    })
-    this.job.start()
-  }
-
-Co2SensorAccessory.prototype.getServices = function() {
   return [this.informationService, this.CarbonDioxideSensorService];
 }
 
