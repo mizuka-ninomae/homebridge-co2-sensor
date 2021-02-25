@@ -1,7 +1,7 @@
 {
   "name": "homebridge-co2-sensor",
   "displayName": "Homebridge CO2 Sensor",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "main": "index.js",
   "scripts": {
     "lint": "echo \"Warning: lint is not used\" && exit 0",
