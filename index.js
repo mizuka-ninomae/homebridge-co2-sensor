@@ -19,15 +19,10 @@ function Co2SensorAccessory(log, config) {
   this.informationService         = new Service.AccessoryInformation();
   this.CarbonDioxideSensorService = new Service.CarbonDioxideSensor(this.name);
 
-  this.informationService
-    .setCharacteristic(Characteristic.Manufacturer, "Co2Sensor Manufacturer")
-    .setCharacteristic(Characteristic.Model, 'Co2Sensor Model')
-    .setCharacteristic(Characteristic.SerialNumber, 'Co2Sensor Serial Number');
-
-    this.job = new CronJob({
-      cronTime: this.schedule,
-      onTick: () => {
-       new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
+  this.job = new CronJob({
+    cronTime: this.schedule,
+    onTick: () => {
+      new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
         if (co2_level == null) {
           this.CarbonDioxideSensorService
             .updateCharacteristic(Characteristic.CarbonDioxideLevel, new Error(error));
@@ -44,25 +39,17 @@ function Co2SensorAccessory(log, config) {
             .updateCharacteristic(Characteristic.CarbonDioxideDetected, co2_detected);
         }
       }.bind(this))
-      },
-      runOnInit: true
-    })
-    this.job.start()
-  }
+    },
+    runOnInit: true
+  })
+  this.job.start()
+}
 
 Co2SensorAccessory.prototype.getServices = function() {
+  this.informationService
+    .setCharacteristic(Characteristic.Manufacturer, "Co2Sensor Manufacturer")
+    .setCharacteristic(Characteristic.Model, 'Co2Sensor Model')
+    .setCharacteristic(Characteristic.SerialNumber, 'Co2Sensor Serial Number');
+
   return [this.informationService, this.CarbonDioxideSensorService];
-}
-
-Co2SensorAccessory.prototype.getCarbonDioxideLevel = function(callback) {
-  new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
-    callback (null, co2_level);
-  });
-}
-
-Co2SensorAccessory.prototype.getCarbonDioxideDetected = function(callback) {
-  new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
-    let co2_detected = (this.warning_level > co2_level) ? 0 : 1;
-    callback (null, co2_detected);
-  });
 }
