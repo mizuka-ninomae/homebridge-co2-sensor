@@ -14,7 +14,6 @@ function Co2SensorAccessory(log, config) {
   this.uart_path     = config["uart_path"];
   this.schedule      = config["schedule"] || '*/5 * * * *';
   this.warning_level = config["warning_level"] || 1500;
-  this.debag         = config["debag"] || false;
 
   this.informationService         = new Service.AccessoryInformation();
   this.CarbonDioxideSensorService = new Service.CarbonDioxideSensor(this.name);
