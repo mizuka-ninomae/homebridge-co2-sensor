@@ -14,13 +14,20 @@ function Co2SensorAccessory(log, config) {
   this.uart_path     = config["uart_path"];
   this.schedule      = config["schedule"] || '*/5 * * * *';
   this.warning_level = config["warning_level"] || 1500;
+  this.debag         = config["debag"] || false;
 
   this.informationService         = new Service.AccessoryInformation();
   this.CarbonDioxideSensorService = new Service.CarbonDioxideSensor(this.name);
 
-  this.job = new CronJob({
-    cronTime: this.schedule,
-    onTick: new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
+  this.informationService
+    .setCharacteristic(Characteristic.Manufacturer, "Co2Sensor Manufacturer")
+    .setCharacteristic(Characteristic.Model, 'Co2Sensor Model')
+    .setCharacteristic(Characteristic.SerialNumber, 'Co2Sensor Serial Number');
+
+    this.job = new CronJob({
+      cronTime: this.schedule,
+      onTick: () => {
+       new MH_Z19 (this.uart_path, function(error, co2_level, stderr) {
         if (co2_level == null) {
           this.CarbonDioxideSensorService
             .updateCharacteristic(Characteristic.CarbonDioxideLevel, new Error(error));
@@ -36,26 +43,14 @@ function Co2SensorAccessory(log, config) {
           this.CarbonDioxideSensorService
             .updateCharacteristic(Characteristic.CarbonDioxideDetected, co2_detected);
         }
-    }),
-    runOnInit: true
-  })
-  this.job.start()
-}
+      }.bind(this))
+      },
+      runOnInit: true
+    })
+    this.job.start()
+  }
 
 Co2SensorAccessory.prototype.getServices = function() {
-  this.informationService
-    .setCharacteristic(Characteristic.Manufacturer, "Co2Sensor Manufacturer")
-    .setCharacteristic(Characteristic.Model, 'Co2Sensor Model')
-    .setCharacteristic(Characteristic.SerialNumber, 'Co2Sensor Serial Number');
-
-  this.CarbonDioxideSensorService
-    .getCharacteristic(Characteristic.CarbonDioxideLevel)
-    .on('get', this.getCarbonDioxideLevel.bind(this));
-
-  this.CarbonDioxideSensorService
-    .getCharacteristic(Characteristic.CarbonDioxideDetected)
-    .on('get', this.getCarbonDioxideDetected.bind(this));
-
   return [this.informationService, this.CarbonDioxideSensorService];
 }
 

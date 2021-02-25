@@ -3,7 +3,7 @@
       {
           "accessory": "Co2Sensor",
           "name": "Co2 Sensor",
-          "uart": "ttyXXX0",
+          "uart_path": "/dev/ttyXXX0",
           "schedule": "*/5 * * * *",
           "warning_level": 1500
       },
