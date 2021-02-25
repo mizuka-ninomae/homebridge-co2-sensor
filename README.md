@@ -102,8 +102,8 @@ UART2,UART4は開放状況、環境によってずれる可能性があります
     "accessories": [
         {
             "accessory": "Co2Sensor",
-            "name": "Co2 Sensor",
-            "uart": "ttyXXX",
+            "name": "CO2 Sensor",
+            "uart": "/dev/ttyXXX",
             "schedule": "*/5 * * * *",
             "warning_level": 1500
         },
